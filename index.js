@@ -54,6 +54,7 @@ async function main() {
       initializeApp(firebaseConfig);
     }
     auth = getAuth();
+    db = getFirestore();
   } catch (e) {
     console.log('error:', e);
     document.getElementById('app').innerHTML =
