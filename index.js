@@ -199,6 +199,68 @@ rsvpNo.onclick = async () => {
     console.error(e);
   }
 };
+
+// Listen for attendee list
+const attendingQuery = query(
+  collection(db, 'attendees'),
+  where('attending', '==', true)
+);
+const unsubscribe = onSnapshot(attendingQuery, snap => {
+  const newAttendeeCount = snap.docs.length;
+  numberAttending.innerHTML = newAttendeeCount + ' people going';
+});
+
+// Listen for attendee list
+function subscribeCurrentRSVP(user) {
+  const ref = doc(db, 'attendees', user.uid);
+  rsvpListener = onSnapshot(ref, doc => {
+    if (doc && doc.data()) {
+      const attendingResponse = doc.data().attending;
+
+      // Update css classes for buttons
+      if (attendingResponse) {
+        rsvpYes.className = 'clicked';
+        rsvpNo.className = '';
+      } else {
+        rsvpYes.className = '';
+        rsvpNo.className = 'clicked';
+      }
+    }
+  });
+}
+
+function unsubscribeCurrentRSVP() {
+  if (rsvpListener != null) {
+    rsvpListener();
+    rsvpListener = null;
+  }
+  rsvpYes.className = '';
+  rsvpNo.className = '';
+}
+
+// Listen to the current Auth state
+  // Listen to the current Auth state
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      startRsvpButton.textContent = 'LOGOUT';
+      // Show guestbook to logged-in users
+      guestbookContainer.style.display = 'block';
+
+      // Subscribe to the guestbook collection
+      subscribeGuestbook();
+      // Subcribe to the user's RSVP
+      subscribeCurrentRSVP(user);
+    } else {
+      startRsvpButton.textContent = 'RSVP';
+      // Hide guestbook for non-logged-in users
+      guestbookContainer.style.display = 'none'
+      ;
+      // Unsubscribe from the guestbook collection
+      unsubscribeGuestbook();
+      // Unsubscribe from the guestbook collection
+      unsubscribeCurrentRSVP();
+    }
+  });
+
 }
 main();
-
