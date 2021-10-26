@@ -11,6 +11,12 @@ import {
   onAuthStateChanged
 } from 'firebase/auth';
 
+import {
+  getFirestore,
+  addDoc,
+  collection
+} from 'firebase/firestore';
+
 import {} from 'firebase/firestore';
 
 import * as firebaseui from 'firebaseui';
