@@ -11,13 +11,17 @@ import {
   onAuthStateChanged
 } from 'firebase/auth';
 
+// Add the Firebase products and methods that you want to use
 import {
   getFirestore,
   addDoc,
   collection,
   query,
   orderBy,
-  onSnapshot
+  onSnapshot,
+  doc,
+  setDoc,
+  where
 } from 'firebase/firestore';
 
 import {} from 'firebase/firestore';
@@ -168,5 +172,33 @@ onAuthStateChanged(auth, user => {
     unsubscribeGuestbook();
   }
 });
+// Listen to RSVP responses
+rsvpYes.onclick = async () => {
+  // Get a reference to the user's document in the attendees collection
+  const userRef = doc(db, 'attendees', auth.currentUser.uid);
+
+  // If they RSVP'd yes, save a document with attendi()ng: true
+  try {
+    await setDoc(userRef, {
+      attending: true
+    });
+  } catch (e) {
+    console.error(e);
+  }
+};
+rsvpNo.onclick = async () => {
+  // Get a reference to the user's document in the attendees collection
+  const userRef = doc(db, 'attendees', auth.currentUser.uid);
+
+  // If they RSVP'd yes, save a document with attending: true
+  try {
+    await setDoc(userRef, {
+      attending: false
+    });
+  } catch (e) {
+    console.error(e);
+  }
+};
 }
 main();
+
