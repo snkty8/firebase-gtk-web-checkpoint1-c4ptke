@@ -127,9 +127,11 @@ onAuthStateChanged(auth, user => {
     return false;
   });
 
-  // Create query for messages
+  // Listen to guestbook updates
+// Listen to guestbook updates
+function subscribeGuestbook() {
   const q = query(collection(db, 'guestbook'), orderBy('timestamp', 'desc'));
-  onSnapshot(q, snaps => {
+  guestbookListener = onSnapshot(q, snaps => {
     // Reset page
     guestbook.innerHTML = '';
     // Loop through documents in database
@@ -140,5 +142,31 @@ onAuthStateChanged(auth, user => {
       guestbook.appendChild(entry);
     });
   });
+}
+
+// Unsubscribe from guestbook updates
+function unsubscribeGuestbook() {
+  if (guestbookListener != null) {
+    guestbookListener();
+    guestbookListener = null;
+  }
+}
+
+// Listen to the current Auth state
+onAuthStateChanged(auth, user => {
+  if (user) {
+    startRsvpButton.textContent = 'LOGOUT';
+    // Show guestbook to logged-in users
+    guestbookContainer.style.display = 'block';
+    // Subscribe to the guestbook collection
+    subscribeGuestbook();
+  } else {
+    startRsvpButton.textContent = 'RSVP';
+    // Hide guestbook for non-logged-in users
+    guestbookContainer.style.display = 'none';
+    // Unsubscribe from the guestbook collection
+    unsubscribeGuestbook();
+  }
+});
 }
 main();
