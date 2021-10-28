@@ -8,6 +8,10 @@
 
 ### What we've covered
 - Firebase Authentication
+  Email Sign-in was enabled for Firebase Authentication
+
+  Since the web app uses [Cloud Firestore](https://firebase.google.com/docs/firestore/) to save chat messages and recieve new chat messages.  Cloud Firestore was also enabled in test mode.
+
 - FirebaseUI
 - Cloud Firestore
 - Firebase Security Rules
