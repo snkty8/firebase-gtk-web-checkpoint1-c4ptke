@@ -4,6 +4,8 @@
 
 [Demo App](https://firebase-gtk-web-checkpoint1-c4ptke.stackblitz.io/)
 
+Firebase provides detailed documentation and cross-platform SDKs to help you build and ship apps on Android, iOS, the web, C++, and Unity.
+
 ## You've used Firebase to build an interactive, real-time web application!
 
 ### What we've covered
