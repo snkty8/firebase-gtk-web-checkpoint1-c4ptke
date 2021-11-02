@@ -8,11 +8,12 @@
 
 ### What we've covered
 - Firebase Authentication
-
-  Email Sign-in was enabled for Firebase Authentication
-
-  Since the web app uses [Cloud Firestore](https://firebase.google.com/docs/firestore/) to save chat messages and recieve new chat messages.  Cloud Firestore was also enabled in test mode.
-
 - FirebaseUI
 - Cloud Firestore
 - Firebase Security Rules
+
+Email Sign-in was enabled for Firebase Authentication
+
+Since the web app uses [Cloud Firestore](https://firebase.google.com/docs/firestore/) to save chat messages and recieve new chat messages.  Cloud Firestore was also enabled in test mode.
+
+Cloud Firestore is a NoSQL database, and data stored in the database is split into collections, documents, fields, and subcollections. Each message is stored in the chat as a document in a top-level collection called guestbook.
